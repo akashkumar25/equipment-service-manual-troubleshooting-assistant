@@ -23,6 +23,16 @@ docker compose up --build
 docker compose exec ollama ollama pull qwen2.5:3b-instruct
 ```
 
+## Ingest a manual
+
+Drop service-manual PDFs into `data/manuals/` (a fictional sample lives in `data/samples/`) and run:
+
+```bash
+manual-assistant ingest --manuals-dir data/samples
+```
+
+This writes `data/index/chunks.jsonl`: one chunk per PDF page with the manual name, page number, detected model, system/section and any fault-code table rows (`E101  Hydraulic oil temperature too high`). The sample manual is regenerated with `python scripts/make_sample_manual.py` (needs `reportlab`).
+
 ## Configuration
 
 All settings are environment variables prefixed `MANUAL_ASSISTANT_` (see `.env.example`). Point `LLM_BASE_URL`, `LLM_MODEL` and `LLM_API_KEY` at any OpenAI-compatible endpoint to use a hosted model instead of Ollama.
@@ -30,7 +40,7 @@ All settings are environment variables prefixed `MANUAL_ASSISTANT_` (see `.env.e
 ## Roadmap
 
 - [x] Scaffold
-- [ ] PDF ingestion with page-level chunking and metadata
+- [x] PDF ingestion with page-level chunking and metadata
 - [ ] Hybrid retrieval (BM25 + embeddings) with page citations
 - [ ] Fault-code lookup tool and agent
 - [ ] Gradio UI with clickable citations
