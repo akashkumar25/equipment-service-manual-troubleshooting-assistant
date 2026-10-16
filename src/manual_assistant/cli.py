@@ -5,9 +5,11 @@ import sys
 from pathlib import Path
 
 from . import __version__
+from .agent import OpenAICompatibleLLM, TroubleshootingAgent
 from .config import Settings
 from .ingest import ingest_dir, load_chunks, save_chunks
 from .retrieval import HybridRetriever
+from .tools import FaultCodeLookup
 
 
 def list_manuals(settings: Settings) -> list[str]:
@@ -28,6 +30,14 @@ def main(argv: list[str] | None = None) -> int:
     search.add_argument("query")
     search.add_argument("--index", type=Path, default=Path("data/index/chunks.jsonl"))
     search.add_argument("--top-k", type=int, default=3)
+    code = sub.add_parser("lookup", help="exact fault-code lookup in an ingested index")
+    code.add_argument("code")
+    code.add_argument("--index", type=Path, default=Path("data/index/chunks.jsonl"))
+    code.add_argument("--model", help="only entries whose machine model contains this text")
+    ask = sub.add_parser("ask", help="answer a fault code or symptom with page citations")
+    ask.add_argument("question")
+    ask.add_argument("--index", type=Path, default=Path("data/index/chunks.jsonl"))
+    ask.add_argument("--no-llm", action="store_true", help="skip the LLM, print evidence only")
     args = parser.parse_args(argv)
 
     if args.command == "status":
@@ -54,6 +64,20 @@ def main(argv: list[str] | None = None) -> int:
             print(f"[{h.citation}] score={h.score:.4f} {first}")
         if not hits:
             print("no matches")
+        return 0
+    if args.command == "lookup":
+        matches = FaultCodeLookup(load_chunks(args.index)).lookup(args.code, args.model)
+        for m in matches:
+            print(f"{m.code}: {m.description} [{m.citation}]")
+        if not matches:
+            print("code not found")
+        return 0 if matches else 1
+    if args.command == "ask":
+        retriever = HybridRetriever(load_chunks(args.index))
+        llm = None if args.no_llm else OpenAICompatibleLLM.from_settings(Settings())
+        answer = TroubleshootingAgent(retriever, llm).ask(args.question)
+        print(answer.text)
+        print("\nSources: " + "; ".join(answer.citations))
         return 0
     parser.print_help()
     return 0
