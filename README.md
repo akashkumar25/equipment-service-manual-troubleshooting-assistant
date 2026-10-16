@@ -42,6 +42,16 @@ manual-assistant search "engine overheating coolant"
 
 Retrieval fuses BM25 keyword ranking (fault codes such as `E101` stay whole tokens) with dense embeddings via reciprocal rank fusion. Each hit is a page, printed as `[manual.pdf, p. 3]`. The default embedder is an offline character n-gram hashing embedder (no model download, works in any language). For semantic multilingual embeddings install `pip install -e ".[embeddings]"` and pass `SentenceTransformerEmbedder()` to `HybridRetriever`.
 
+## Ask (fault-code tool + agent)
+
+```bash
+manual-assistant lookup E101                      # exact table lookup, with page citation
+manual-assistant ask "What does E101 mean?"       # LLM answer from tool result + retrieved pages
+manual-assistant ask "E101" --no-llm              # evidence only, fully offline
+```
+
+The agent extracts fault codes from the question (`E101`, `F-2040`, `SPN 100 FMI 3`), looks them up exactly in the tables captured at ingestion, retrieves the best pages with hybrid search and asks the LLM to answer only from that evidence, citing `[manual, p. N]`. Citations the model invents are dropped. If the LLM endpoint is unreachable the agent falls back to an extractive, still-cited answer.
+
 ## Configuration
 
 All settings are environment variables prefixed `MANUAL_ASSISTANT_` (see `.env.example`). Point `LLM_BASE_URL`, `LLM_MODEL` and `LLM_API_KEY` at any OpenAI-compatible endpoint to use a hosted model instead of Ollama.
@@ -51,7 +61,7 @@ All settings are environment variables prefixed `MANUAL_ASSISTANT_` (see `.env.e
 - [x] Scaffold
 - [x] PDF ingestion with page-level chunking and metadata
 - [x] Hybrid retrieval (BM25 + embeddings) with page citations
-- [ ] Fault-code lookup tool and agent
+- [x] Fault-code lookup tool and agent
 - [ ] Gradio UI with clickable citations
 - [ ] Evaluation set and accuracy report
 - [ ] Multilingual answers (EN/DE and more)
