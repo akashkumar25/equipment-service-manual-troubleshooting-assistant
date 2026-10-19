@@ -13,8 +13,9 @@ authors = [{ name = "Akash Kumar" }]
 dependencies = ["pydantic>=2.5", "pydantic-settings>=2.1", "pypdf>=4.0", "numpy>=1.24"]
 
 [project.optional-dependencies]
+ui = ["gradio>=4.40"]
 embeddings = ["sentence-transformers>=3"]
-dev = ["pytest>=8", "ruff>=0.5"]
+dev = ["pytest>=8", "ruff>=0.5", "gradio>=4.40"]
 
 [project.scripts]
 manual-assistant = "manual_assistant.cli:main"
