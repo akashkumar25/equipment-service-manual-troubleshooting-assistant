@@ -38,6 +38,11 @@ def main(argv: list[str] | None = None) -> int:
     ask.add_argument("question")
     ask.add_argument("--index", type=Path, default=Path("data/index/chunks.jsonl"))
     ask.add_argument("--no-llm", action="store_true", help="skip the LLM, print evidence only")
+    ui = sub.add_parser("ui", help="launch the Gradio web UI")
+    ui.add_argument("--index", type=Path, default=Path("data/index/chunks.jsonl"))
+    ui.add_argument("--host", default="127.0.0.1")
+    ui.add_argument("--port", type=int, default=7860)
+    ui.add_argument("--no-llm", action="store_true", help="evidence-only answers")
     args = parser.parse_args(argv)
 
     if args.command == "status":
@@ -78,6 +83,13 @@ def main(argv: list[str] | None = None) -> int:
         answer = TroubleshootingAgent(retriever, llm).ask(args.question)
         print(answer.text)
         print("\nSources: " + "; ".join(answer.citations))
+        return 0
+    if args.command == "ui":
+        from .ui import AssistantService, build_app
+
+        chunks = load_chunks(args.index) if args.index.is_file() else []
+        llm = None if args.no_llm else OpenAICompatibleLLM.from_settings(Settings())
+        build_app(AssistantService(chunks, llm)).launch(server_name=args.host, server_port=args.port)
         return 0
     parser.print_help()
     return 0

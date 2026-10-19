@@ -52,6 +52,15 @@ manual-assistant ask "E101" --no-llm              # evidence only, fully offline
 
 The agent extracts fault codes from the question (`E101`, `F-2040`, `SPN 100 FMI 3`), looks them up exactly in the tables captured at ingestion, retrieves the best pages with hybrid search and asks the LLM to answer only from that evidence, citing `[manual, p. N]`. Citations the model invents are dropped. If the LLM endpoint is unreachable the agent falls back to an extractive, still-cited answer.
 
+## Web UI
+
+```bash
+pip install -e ".[ui]"
+manual-assistant ui --index data/index/chunks.jsonl     # http://127.0.0.1:7860
+```
+
+Upload one or more service-manual PDFs (re-uploading a manual replaces its pages), type a fault code or symptom and read the answer. Every cited source is listed as a clickable choice; selecting one shows the full manual page text with its model and system. Add `--no-llm` for evidence-only answers. With `docker compose up --build` the UI is not started by default; run `docker compose run --service-ports assistant ui --host 0.0.0.0`.
+
 ## Configuration
 
 All settings are environment variables prefixed `MANUAL_ASSISTANT_` (see `.env.example`). Point `LLM_BASE_URL`, `LLM_MODEL` and `LLM_API_KEY` at any OpenAI-compatible endpoint to use a hosted model instead of Ollama.
@@ -62,7 +71,7 @@ All settings are environment variables prefixed `MANUAL_ASSISTANT_` (see `.env.e
 - [x] PDF ingestion with page-level chunking and metadata
 - [x] Hybrid retrieval (BM25 + embeddings) with page citations
 - [x] Fault-code lookup tool and agent
-- [ ] Gradio UI with clickable citations
+- [x] Gradio UI with clickable citations
 - [ ] Evaluation set and accuracy report
 - [ ] Multilingual answers (EN/DE and more)
 
