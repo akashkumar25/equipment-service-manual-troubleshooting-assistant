@@ -1,0 +1,63 @@
+{"question": "What does H101 mean?", "kind": "code", "manual": "bx150_wheel_loader.pdf", "pages": [2], "keywords": ["hydraulic oil temperature too high"]}
+{"question": "How do I fix fault H101 on the BX-150 Wheel Loader?", "kind": "code_steps", "manual": "bx150_wheel_loader.pdf", "pages": [3, 2], "keywords": ["park the machine and"]}
+{"question": "The hydraulic oil runs hot after an hour of loading. What should I check?", "kind": "symptom", "manual": "bx150_wheel_loader.pdf", "pages": [3, 2], "keywords": ["hydraulic oil temperature too high"]}
+{"question": "What does H102 mean?", "kind": "code", "manual": "bx150_wheel_loader.pdf", "pages": [2], "keywords": ["lift circuit pressure low"]}
+{"question": "How do I fix fault H102 on the BX-150 Wheel Loader?", "kind": "code_steps", "manual": "bx150_wheel_loader.pdf", "pages": [4, 2], "keywords": ["check the lift relie"]}
+{"question": "The bucket lifts slowly and cannot raise a full load. What should I check?", "kind": "symptom", "manual": "bx150_wheel_loader.pdf", "pages": [4, 2], "keywords": ["lift circuit pressure low"]}
+{"question": "What does H103 mean?", "kind": "code", "manual": "bx150_wheel_loader.pdf", "pages": [2], "keywords": ["steering pilot pressure sensor out of range"]}
+{"question": "How do I fix fault H103 on the BX-150 Wheel Loader?", "kind": "code_steps", "manual": "bx150_wheel_loader.pdf", "pages": [5, 2], "keywords": ["inspect the sensor c"]}
+{"question": "The steering feels heavy and the pilot gauge reads zero. What should I check?", "kind": "symptom", "manual": "bx150_wheel_loader.pdf", "pages": [5, 2], "keywords": ["steering pilot pressure sensor out of range"]}
+{"question": "What does E201 mean?", "kind": "code", "manual": "bx150_wheel_loader.pdf", "pages": [6], "keywords": ["coolant temperature high"]}
+{"question": "How do I fix fault E201 on the BX-150 Wheel Loader?", "kind": "code_steps", "manual": "bx150_wheel_loader.pdf", "pages": [7, 6], "keywords": ["stop the engine and "]}
+{"question": "The engine overheats and steam comes from the radiator. What should I check?", "kind": "symptom", "manual": "bx150_wheel_loader.pdf", "pages": [7, 6], "keywords": ["coolant temperature high"]}
+{"question": "What does E202 mean?", "kind": "code", "manual": "bx150_wheel_loader.pdf", "pages": [6], "keywords": ["engine oil pressure low"]}
+{"question": "How do I fix fault E202 on the BX-150 Wheel Loader?", "kind": "code_steps", "manual": "bx150_wheel_loader.pdf", "pages": [8, 6], "keywords": ["check the oil level "]}
+{"question": "The oil warning lamp flickers at idle. What should I check?", "kind": "symptom", "manual": "bx150_wheel_loader.pdf", "pages": [8, 6], "keywords": ["engine oil pressure low"]}
+{"question": "What does E203 mean?", "kind": "code", "manual": "bx150_wheel_loader.pdf", "pages": [6], "keywords": ["fuel rail pressure below target"]}
+{"question": "How do I fix fault E203 on the BX-150 Wheel Loader?", "kind": "code_steps", "manual": "bx150_wheel_loader.pdf", "pages": [9, 6], "keywords": ["replace the fuel fil"]}
+{"question": "The engine lacks power and hesitates under load. What should I check?", "kind": "symptom", "manual": "bx150_wheel_loader.pdf", "pages": [9, 6], "keywords": ["fuel rail pressure below target"]}
+{"question": "What does T301 mean?", "kind": "code", "manual": "bx150_wheel_loader.pdf", "pages": [10], "keywords": ["transmission oil temperature high"]}
+{"question": "How do I fix fault T301 on the BX-150 Wheel Loader?", "kind": "code_steps", "manual": "bx150_wheel_loader.pdf", "pages": [11, 10], "keywords": ["reduce load and let "]}
+{"question": "The gearbox smells hot when pushing a pile. What should I check?", "kind": "symptom", "manual": "bx150_wheel_loader.pdf", "pages": [11, 10], "keywords": ["transmission oil temperature high"]}
+{"question": "What does T302 mean?", "kind": "code", "manual": "bx150_wheel_loader.pdf", "pages": [10], "keywords": ["clutch pack slip detected"]}
+{"question": "How do I fix fault T302 on the BX-150 Wheel Loader?", "kind": "code_steps", "manual": "bx150_wheel_loader.pdf", "pages": [12, 10], "keywords": ["check clutch pressur"]}
+{"question": "The machine revs up but does not move forward. What should I check?", "kind": "symptom", "manual": "bx150_wheel_loader.pdf", "pages": [12, 10], "keywords": ["clutch pack slip detected"]}
+{"question": "What does A401 mean?", "kind": "code", "manual": "bx150_wheel_loader.pdf", "pages": [13], "keywords": ["battery voltage low"]}
+{"question": "How do I fix fault A401 on the BX-150 Wheel Loader?", "kind": "code_steps", "manual": "bx150_wheel_loader.pdf", "pages": [14, 13], "keywords": ["measure battery volt"]}
+{"question": "The machine cranks slowly in the morning. What should I check?", "kind": "symptom", "manual": "bx150_wheel_loader.pdf", "pages": [14, 13], "keywords": ["battery voltage low"]}
+{"question": "What does A402 mean?", "kind": "code", "manual": "bx150_wheel_loader.pdf", "pages": [13], "keywords": ["alternator charging fault"]}
+{"question": "How do I fix fault A402 on the BX-150 Wheel Loader?", "kind": "code_steps", "manual": "bx150_wheel_loader.pdf", "pages": [15, 13], "keywords": ["check the alternator"]}
+{"question": "The battery lamp stays on while running. What should I check?", "kind": "symptom", "manual": "bx150_wheel_loader.pdf", "pages": [15, 13], "keywords": ["alternator charging fault"]}
+{"question": "What does U101 mean?", "kind": "code", "manual": "kr75_crawler_dozer.pdf", "pages": [2], "keywords": ["track tension too low"]}
+{"question": "How do I fix fault U101 on the KR-75 Crawler Dozer?", "kind": "code_steps", "manual": "kr75_crawler_dozer.pdf", "pages": [3, 2], "keywords": ["park on level ground"]}
+{"question": "The track sags and rattles over the idlers. What should I check?", "kind": "symptom", "manual": "kr75_crawler_dozer.pdf", "pages": [3, 2], "keywords": ["track tension too low"]}
+{"question": "What does U102 mean?", "kind": "code", "manual": "kr75_crawler_dozer.pdf", "pages": [2], "keywords": ["final drive oil level low"]}
+{"question": "How do I fix fault U102 on the KR-75 Crawler Dozer?", "kind": "code_steps", "manual": "kr75_crawler_dozer.pdf", "pages": [4, 2], "keywords": ["clean around the fin"]}
+{"question": "Oil drips near the sprocket hub. What should I check?", "kind": "symptom", "manual": "kr75_crawler_dozer.pdf", "pages": [4, 2], "keywords": ["final drive oil level low"]}
+{"question": "What does U103 mean?", "kind": "code", "manual": "kr75_crawler_dozer.pdf", "pages": [2], "keywords": ["track speed sensor signal lost"]}
+{"question": "How do I fix fault U103 on the KR-75 Crawler Dozer?", "kind": "code_steps", "manual": "kr75_crawler_dozer.pdf", "pages": [5, 2], "keywords": ["inspect the speed se"]}
+{"question": "The left track does not respond to steering input. What should I check?", "kind": "symptom", "manual": "kr75_crawler_dozer.pdf", "pages": [5, 2], "keywords": ["track speed sensor signal lost"]}
+{"question": "What does H501 mean?", "kind": "code", "manual": "kr75_crawler_dozer.pdf", "pages": [6], "keywords": ["blade tilt valve solenoid open circuit"]}
+{"question": "How do I fix fault H501 on the KR-75 Crawler Dozer?", "kind": "code_steps", "manual": "kr75_crawler_dozer.pdf", "pages": [7, 6], "keywords": ["disconnect the solen"]}
+{"question": "The blade will not tilt left or right. What should I check?", "kind": "symptom", "manual": "kr75_crawler_dozer.pdf", "pages": [7, 6], "keywords": ["blade tilt valve solenoid open circuit"]}
+{"question": "What does H502 mean?", "kind": "code", "manual": "kr75_crawler_dozer.pdf", "pages": [6], "keywords": ["hydraulic filter restriction"]}
+{"question": "How do I fix fault H502 on the KR-75 Crawler Dozer?", "kind": "code_steps", "manual": "kr75_crawler_dozer.pdf", "pages": [8, 6], "keywords": ["warm the oil and re-"]}
+{"question": "The filter bypass lamp lights on cold start. What should I check?", "kind": "symptom", "manual": "kr75_crawler_dozer.pdf", "pages": [8, 6], "keywords": ["hydraulic filter restriction"]}
+{"question": "What does H503 mean?", "kind": "code", "manual": "kr75_crawler_dozer.pdf", "pages": [6], "keywords": ["ripper pressure low"]}
+{"question": "How do I fix fault H503 on the KR-75 Crawler Dozer?", "kind": "code_steps", "manual": "kr75_crawler_dozer.pdf", "pages": [9, 6], "keywords": ["check the ripper rel"]}
+{"question": "The ripper shank will not penetrate hard ground. What should I check?", "kind": "symptom", "manual": "kr75_crawler_dozer.pdf", "pages": [9, 6], "keywords": ["ripper pressure low"]}
+{"question": "What does E601 mean?", "kind": "code", "manual": "kr75_crawler_dozer.pdf", "pages": [10], "keywords": ["turbocharger boost pressure low"]}
+{"question": "How do I fix fault E601 on the KR-75 Crawler Dozer?", "kind": "code_steps", "manual": "kr75_crawler_dozer.pdf", "pages": [11, 10], "keywords": ["inspect the intake h"]}
+{"question": "Black smoke and weak pulling power uphill. What should I check?", "kind": "symptom", "manual": "kr75_crawler_dozer.pdf", "pages": [11, 10], "keywords": ["turbocharger boost pressure low"]}
+{"question": "What does E602 mean?", "kind": "code", "manual": "kr75_crawler_dozer.pdf", "pages": [10], "keywords": ["exhaust temperature high"]}
+{"question": "How do I fix fault E602 on the KR-75 Crawler Dozer?", "kind": "code_steps", "manual": "kr75_crawler_dozer.pdf", "pages": [12, 10], "keywords": ["reduce engine load."]}
+{"question": "The exhaust pipe glows after heavy pushing. What should I check?", "kind": "symptom", "manual": "kr75_crawler_dozer.pdf", "pages": [12, 10], "keywords": ["exhaust temperature high"]}
+{"question": "What does E603 mean?", "kind": "code", "manual": "kr75_crawler_dozer.pdf", "pages": [10], "keywords": ["starter relay fault"]}
+{"question": "How do I fix fault E603 on the KR-75 Crawler Dozer?", "kind": "code_steps", "manual": "kr75_crawler_dozer.pdf", "pages": [13, 10], "keywords": ["check battery voltag"]}
+{"question": "Turning the key only produces a click. What should I check?", "kind": "symptom", "manual": "kr75_crawler_dozer.pdf", "pages": [13, 10], "keywords": ["starter relay fault"]}
+{"question": "What does C701 mean?", "kind": "code", "manual": "kr75_crawler_dozer.pdf", "pages": [14], "keywords": ["joystick calibration required"]}
+{"question": "How do I fix fault C701 on the KR-75 Crawler Dozer?", "kind": "code_steps", "manual": "kr75_crawler_dozer.pdf", "pages": [15, 14], "keywords": ["enter the service me"]}
+{"question": "The blade drifts when the joystick is centred. What should I check?", "kind": "symptom", "manual": "kr75_crawler_dozer.pdf", "pages": [15, 14], "keywords": ["joystick calibration required"]}
+{"question": "What does C702 mean?", "kind": "code", "manual": "kr75_crawler_dozer.pdf", "pages": [14], "keywords": ["cab air conditioning pressure fault"]}
+{"question": "How do I fix fault C702 on the KR-75 Crawler Dozer?", "kind": "code_steps", "manual": "kr75_crawler_dozer.pdf", "pages": [16, 14], "keywords": ["check the refrigeran"]}
+{"question": "The cab stays warm with the air conditioning on. What should I check?", "kind": "symptom", "manual": "kr75_crawler_dozer.pdf", "pages": [16, 14], "keywords": ["cab air conditioning pressure fault"]}
