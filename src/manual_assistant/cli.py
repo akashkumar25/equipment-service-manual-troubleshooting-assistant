@@ -38,6 +38,10 @@ def main(argv: list[str] | None = None) -> int:
     ask.add_argument("question")
     ask.add_argument("--index", type=Path, default=Path("data/index/chunks.jsonl"))
     ask.add_argument("--no-llm", action="store_true", help="skip the LLM, print evidence only")
+    ev = sub.add_parser("eval", help="citation/answer accuracy on a labelled question set")
+    ev.add_argument("--manuals-dir", type=Path, default=Path("data/eval/manuals"))
+    ev.add_argument("--questions", type=Path, default=Path("data/eval/questions.jsonl"))
+    ev.add_argument("--llm", action="store_true", help="use the configured LLM (default: offline)")
     ui = sub.add_parser("ui", help="launch the Gradio web UI")
     ui.add_argument("--index", type=Path, default=Path("data/index/chunks.jsonl"))
     ui.add_argument("--host", default="127.0.0.1")
@@ -83,6 +87,14 @@ def main(argv: list[str] | None = None) -> int:
         answer = TroubleshootingAgent(retriever, llm).ask(args.question)
         print(answer.text)
         print("\nSources: " + "; ".join(answer.citations))
+        return 0
+    if args.command == "eval":
+        from .evaluate import evaluate, load_questions, to_markdown
+
+        chunks = ingest_dir(args.manuals_dir)
+        llm = OpenAICompatibleLLM.from_settings(Settings()) if args.llm else None
+        agent = TroubleshootingAgent(HybridRetriever(chunks), llm)
+        print(to_markdown(evaluate(agent, load_questions(args.questions), chunks)))
         return 0
     if args.command == "ui":
         from .ui import AssistantService, build_app
