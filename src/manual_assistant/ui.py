@@ -11,6 +11,7 @@ from pathlib import Path
 from pypdf.errors import PdfReadError
 
 from .agent import LLM, Answer, TroubleshootingAgent
+from .i18n import LANGUAGE_NAMES
 from .ingest import PageChunk, ingest_pdf
 from .retrieval import HybridRetriever
 
@@ -41,12 +42,12 @@ class AssistantService:
     def manuals(self) -> list[str]:
         return sorted({c.manual for c in self.chunks})
 
-    def ask(self, question: str) -> Answer:
+    def ask(self, question: str, language: str | None = None) -> Answer:
         if not self.chunks:
             return Answer(question=question, text="Upload or load a manual first.")
         if self._agent is None:
             self._agent = TroubleshootingAgent(HybridRetriever(self.chunks), self.llm)
-        return self._agent.ask(question)
+        return self._agent.ask(question, language)
 
     def page(self, citation: str) -> PageChunk | None:
         """Resolve a ``"manual.pdf, p. 3"`` citation to its page chunk."""
@@ -73,8 +74,8 @@ def build_app(service: AssistantService):
         paths = [Path(f if isinstance(f, str) else f.name) for f in files or []]
         return service.add_manuals(paths), "\n".join(service.manuals())
 
-    def ask(question):
-        answer = service.ask(question)
+    def ask(question, language):
+        answer = service.ask(question, None if language == "auto" else language)
         first = answer.citations[0] if answer.citations else None
         return (
             answer.text,
@@ -92,12 +93,14 @@ def build_app(service: AssistantService):
                                     interactive=False, lines=3)
             with gr.Column(scale=2):
                 question = gr.Textbox(label="Fault code or symptom", placeholder="E101")
+                language = gr.Dropdown(["auto", *LANGUAGE_NAMES], value="auto",
+                                       label="Answer language")
                 go = gr.Button("Ask", variant="primary")
                 answer = gr.Textbox(label="Answer", lines=10, interactive=False)
                 sources = gr.Radio(label="Sources (click to open the page)", choices=[])
                 page = gr.Markdown(service.page_markdown(None))
         files.upload(upload, files, [status, loaded])
-        go.click(ask, question, [answer, sources, page])
-        question.submit(ask, question, [answer, sources, page])
+        go.click(ask, [question, language], [answer, sources, page])
+        question.submit(ask, [question, language], [answer, sources, page])
         sources.change(service.page_markdown, sources, page)
     return app

@@ -37,6 +37,7 @@ def main(argv: list[str] | None = None) -> int:
     ask = sub.add_parser("ask", help="answer a fault code or symptom with page citations")
     ask.add_argument("question")
     ask.add_argument("--index", type=Path, default=Path("data/index/chunks.jsonl"))
+    ask.add_argument("--lang", help="answer language code (en, de, fr, es, ...); default: detect")
     ask.add_argument("--no-llm", action="store_true", help="skip the LLM, print evidence only")
     ev = sub.add_parser("eval", help="citation/answer accuracy on a labelled question set")
     ev.add_argument("--manuals-dir", type=Path, default=Path("data/eval/manuals"))
@@ -84,7 +85,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "ask":
         retriever = HybridRetriever(load_chunks(args.index))
         llm = None if args.no_llm else OpenAICompatibleLLM.from_settings(Settings())
-        answer = TroubleshootingAgent(retriever, llm).ask(args.question)
+        answer = TroubleshootingAgent(retriever, llm).ask(args.question, args.lang)
         print(answer.text)
         print("\nSources: " + "; ".join(answer.citations))
         return 0
