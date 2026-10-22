@@ -21,6 +21,7 @@ from typing import Protocol
 from pydantic import BaseModel, Field
 
 from .config import Settings
+from .i18n import LANGUAGE_NAMES, detect_language, expand_query, label
 from .retrieval import Hit, HybridRetriever
 from .tools import FaultCodeLookup, FaultMatch, find_codes
 
@@ -28,7 +29,8 @@ SYSTEM_PROMPT = (
     "You are a service technician's assistant. Answer ONLY from the evidence provided. "
     "Give numbered troubleshooting steps. After each claim cite its source as "
     "[manual, p. N] exactly as written in the evidence. If the evidence does not cover "
-    "the question, say so instead of guessing. Answer in the language of the question."
+    "the question, say so instead of guessing. The evidence may be in another language than "
+    "the question: translate it, but keep fault codes and the [manual, p. N] citations unchanged."
 )
 
 
@@ -71,6 +73,7 @@ class Answer(BaseModel):
     citations: list[str] = Field(default_factory=list)
     fault_matches: list[FaultMatch] = Field(default_factory=list)
     used_llm: bool = False
+    language: str = "en"
 
 
 _CITATION = re.compile(r"\[([^\[\]]+?,\s*p\.\s*\d+)\]")
@@ -89,11 +92,11 @@ class TroubleshootingAgent:
         self.lookup = lookup or FaultCodeLookup(retriever.chunks)
         self.top_k = top_k
 
-    def _evidence(self, question: str) -> tuple[list[FaultMatch], list[Hit]]:
+    def _evidence(self, question: str, lang: str) -> tuple[list[FaultMatch], list[Hit]]:
         matches: list[FaultMatch] = []
         for code in find_codes(question):
             matches.extend(self.lookup.lookup(code))
-        return matches, self.retriever.search(question, self.top_k)
+        return matches, self.retriever.search(expand_query(question, lang), self.top_k)
 
     @staticmethod
     def _format_evidence(matches: list[FaultMatch], hits: list[Hit]) -> str:
@@ -106,16 +109,19 @@ class TroubleshootingAgent:
             parts.append(f"[{h.citation}]\n{h.chunk.text}")
         return "\n".join(parts)
 
-    def ask(self, question: str) -> Answer:
-        matches, hits = self._evidence(question)
+    def ask(self, question: str, language: str | None = None) -> Answer:
+        """Answer in ``language`` (a code like "de"); detected from the question if omitted."""
+        lang = language if language in LANGUAGE_NAMES else detect_language(question)
+        matches, hits = self._evidence(question, lang)
         if not matches and not hits:
-            return Answer(question=question, text="No relevant manual pages found.")
+            return Answer(question=question, text=label(lang, "none"), language=lang)
         # Known sources, in priority order: exact table hits first, then retrieval.
         sources = list(dict.fromkeys([m.citation for m in matches] + [h.citation for h in hits]))
         if self.llm is not None:
             try:
                 prompt = (
-                    f"Question: {question}\n\nEvidence:\n{self._format_evidence(matches, hits)}"
+                    f"Question: {question}\n\nAnswer in {LANGUAGE_NAMES[lang]}.\n\n"
+                    f"Evidence:\n{self._format_evidence(matches, hits)}"
                 )
                 text = self.llm.complete(SYSTEM_PROMPT, prompt)
                 cited = [c for c in dict.fromkeys(_CITATION.findall(text)) if c in sources]
@@ -125,22 +131,24 @@ class TroubleshootingAgent:
                     citations=cited or sources,
                     fault_matches=matches,
                     used_llm=True,
+                    language=lang,
                 )
             except (urllib.error.URLError, OSError, KeyError, ValueError):
                 pass  # fall through to the offline answer
         return Answer(
             question=question,
-            text=self._extractive(matches, hits),
+            text=self._extractive(matches, hits, lang),
             citations=sources,
             fault_matches=matches,
+            language=lang,
         )
 
     @staticmethod
-    def _extractive(matches: list[FaultMatch], hits: list[Hit]) -> str:
+    def _extractive(matches: list[FaultMatch], hits: list[Hit], lang: str = "en") -> str:
         lines: list[str] = []
         for m in matches:
             lines.append(f"{m.code}: {m.description} [{m.citation}]")
         for h in hits:
             first = next((ln.strip() for ln in h.chunk.text.splitlines() if ln.strip()), "")
-            lines.append(f"See [{h.citation}]: {first}")
+            lines.append(f"{label(lang, 'see')} [{h.citation}]: {first}")
         return "\n".join(lines)

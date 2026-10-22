@@ -52,6 +52,17 @@ manual-assistant ask "E101" --no-llm              # evidence only, fully offline
 
 The agent extracts fault codes from the question (`E101`, `F-2040`, `SPN 100 FMI 3`), looks them up exactly in the tables captured at ingestion, retrieves the best pages with hybrid search and asks the LLM to answer only from that evidence, citing `[manual, p. N]`. Citations the model invents are dropped. If the LLM endpoint is unreachable the agent falls back to an extractive, still-cited answer.
 
+## Multilingual questions
+
+Ask in English, German, French, Spanish, Italian, Portuguese or Dutch; the answer comes back in the same language.
+
+```bash
+manual-assistant ask "Das Hydrauliköl wird zu heiß. Was soll ich prüfen?" --no-llm
+manual-assistant ask "What does H101 mean?" --lang fr      # force the answer language
+```
+
+The question language is detected with a small stop-word detector (override with `--lang` or the UI dropdown) and the LLM is told to answer in it, translating the evidence while keeping fault codes and `[manual, p. N]` citations unchanged. Manuals are usually English, so for German, French and Spanish questions a built-in glossary of common service terms (hydraulic oil, pressure, steering, bucket, ...) is appended to the retrieval query in English, which lets BM25 match English pages offline. Fault-code lookup is language independent. For broader cross-lingual recall install the `embeddings` extra, which uses `intfloat/multilingual-e5-small`. The offline (no-LLM) answer uses localized labels. The glossary is intentionally small; extend `_GLOSSARY` in `src/manual_assistant/i18n.py` for more terms or languages.
+
 ## Web UI
 
 ```bash
@@ -93,7 +104,7 @@ All settings are environment variables prefixed `MANUAL_ASSISTANT_` (see `.env.e
 - [x] Fault-code lookup tool and agent
 - [x] Gradio UI with clickable citations
 - [x] Evaluation set and accuracy report
-- [ ] Multilingual answers (EN/DE and more)
+- [x] Multilingual answers (EN/DE and more)
 
 ## License
 
